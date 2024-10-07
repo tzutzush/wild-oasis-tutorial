@@ -1,4 +1,4 @@
-import ReservationCard from "@/app/_components/ReservationCard";
+import ReservationList from "@/app/_components/ResevationList";
 import { getBookings } from "@/app/_lib/data-service";
 import { BookingWithRelatedCabin } from "@/app/_types/types";
 import { auth } from "@/auth";
@@ -19,11 +19,7 @@ export default async function Page() {
           </a>
         </p>
       ) : (
-        <ul className="space-y-6">
-          {bookings.map((booking) => (
-            <ReservationCard booking={booking} key={booking.id} />
-          ))}
-        </ul>
+        <ReservationList bookings={bookings} />
       )}
     </div>
   );
