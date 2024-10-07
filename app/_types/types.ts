@@ -1,4 +1,4 @@
-import type { BookingDB, Booking } from "./booking";
+import type { Booking, BookingWithRelatedCabin } from "./booking";
 import type { Cabin } from "./cabins";
 
-export type { BookingDB, Booking, Cabin };
+export type { Booking, Cabin, BookingWithRelatedCabin };

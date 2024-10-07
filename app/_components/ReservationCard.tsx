@@ -1,7 +1,7 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
 import DeleteReservation from "@/app/_components/DeleteReservation";
-import { Booking } from "../_types/types";
+import { BookingWithRelatedCabin } from "../_types/types";
 import Link from "next/link";
 
 export const formatDistanceFromNow = (dateStr: string) =>
@@ -9,7 +9,7 @@ export const formatDistanceFromNow = (dateStr: string) =>
     addSuffix: true,
   }).replace("about ", "");
 
-function ReservationCard({ booking }: { booking: Booking }) {
+function ReservationCard({ booking }: { booking: BookingWithRelatedCabin }) {
   const { cabins } = booking;
 
   return (

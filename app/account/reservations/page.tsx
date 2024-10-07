@@ -1,11 +1,13 @@
 import ReservationCard from "@/app/_components/ReservationCard";
 import { getBookings } from "@/app/_lib/data-service";
-import { Booking } from "@/app/_types/types";
+import { BookingWithRelatedCabin } from "@/app/_types/types";
 import { auth } from "@/auth";
 
 export default async function Page() {
   const session = await auth();
-  const bookings: Booking[] = await getBookings(session?.user.guestId!);
+  const bookings: BookingWithRelatedCabin[] = await getBookings(
+    session?.user.guestId!
+  );
 
   return (
     <div>

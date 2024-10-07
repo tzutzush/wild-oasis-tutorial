@@ -1,9 +1,9 @@
 export type Cabin = {
   id: number;
-  name: string;
-  maxCapacity: number;
-  regularPrice: number;
-  discount: number;
-  image: string;
-  description: string;
+  name: string | null;
+  maxCapacity: number | null;
+  regularPrice: number | null;
+  discount: number | null;
+  image: string | null;
+  description: string | null;
 };
