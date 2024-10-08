@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function Guest() {
@@ -11,7 +12,9 @@ export default async function Guest() {
           href="/account"
           className="hover:text-accent-400 transition-colors flex items-center gap-4"
         >
-          <img
+          <Image
+            width="34"
+            height="34"
             src={session.user.image}
             alt={session.user.name || "Guest"}
             className="h-8 rounded-full"

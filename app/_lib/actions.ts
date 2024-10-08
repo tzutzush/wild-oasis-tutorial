@@ -3,7 +3,6 @@
 import { signOut, signIn, auth } from "@/auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
-import { Booking } from "../_types/booking";
 import { getBookings } from "./data-service";
 import { redirect } from "next/navigation";
 
@@ -26,7 +25,7 @@ export async function updateProfile(formData: FormData) {
 
   const updateData = { nationalID, nationality, countryFlag };
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("guests")
     .update(updateData)
     .eq("id", session.user.guestId!);
@@ -43,7 +42,7 @@ export async function deleteReservation(id: number) {
   const session = await auth();
   if (!session) throw new Error("You must be logged in!");
 
-  const response = await supabase.from("bookings").delete().eq("id", id);
+  await supabase.from("bookings").delete().eq("id", id);
 
   revalidatePath("/account/reservations");
 }
@@ -60,7 +59,7 @@ export async function updateReservation(formData: FormData) {
   const numGuests = +formData.get("numGuests")! as number;
   const observations = formData.get("observations")!.slice(0, 500) as string;
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("bookings")
     .update({ numGuests, observations })
     .eq("id", id)

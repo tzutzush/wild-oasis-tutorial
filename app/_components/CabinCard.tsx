@@ -14,7 +14,7 @@ function CabinCard({ cabin }: CabinCardProps) {
     <div className="flex border-primary-800 border">
       <div className="flex-1 relative">
         <Image
-          src={image}
+          src={image!}
           fill
           alt={`Cabin ${name}`}
           className="flex-1 border-r border-primary-800 object-cover"
@@ -35,10 +35,10 @@ function CabinCard({ cabin }: CabinCardProps) {
           </div>
 
           <p className="flex gap-3 justify-end items-baseline">
-            {discount > 0 ? (
+            {discount! > 0 ? (
               <>
                 <span className="text-3xl font-[350]">
-                  ${regularPrice - discount}
+                  ${regularPrice! - discount!}
                 </span>
                 <span className="line-through font-semibold text-primary-600">
                   ${regularPrice}

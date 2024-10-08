@@ -1,7 +1,13 @@
 import { eachDayOfInterval } from "date-fns";
 import { supabase } from "@/app/_lib/supabase";
-import { Booking, Cabin } from "../_types/types";
-import { BookingWithRelatedCabin } from "../_types/booking";
+import {
+  Booking,
+  BookingWithRelatedCabin,
+  Cabin,
+  Country,
+  Guest,
+  Settings,
+} from "@/app/_types/types";
 
 export async function getCabin(id: number): Promise<Cabin> {
   const { data, error } = await supabase
@@ -46,19 +52,22 @@ export const getCabins = async function (): Promise<Cabin[]> {
 };
 
 // Guests are uniquely identified by their email address
-export async function getGuest(email: string) {
+export async function getGuest(email: string): Promise<Guest> {
   const { data, error } = await supabase
     .from("guests")
     .select("*")
     .eq("email", email)
     .single();
 
-  // No error here! We handle the possibility of no guest in the sign in callback
+  if (error) {
+    console.error(error);
+    throw new Error("No user found.");
+  }
   return data;
 }
 
 export async function getBooking(id: number): Promise<Booking> {
-  const { data, error, count } = await supabase
+  const { data, error } = await supabase
     .from("bookings")
     .select("*")
     .eq("id", id)
@@ -91,8 +100,10 @@ export async function getBookings(
   return data;
 }
 
-export async function getBookedDatesByCabinId(cabinId: number) {
-  let todayDate = new Date();
+export async function getBookedDatesByCabinId(
+  cabinId: number
+): Promise<Date[]> {
+  const todayDate = new Date();
   todayDate.setUTCHours(0, 0, 0, 0);
   const today = todayDate.toISOString();
 
@@ -121,7 +132,7 @@ export async function getBookedDatesByCabinId(cabinId: number) {
   return bookedDates;
 }
 
-export async function getSettings() {
+export async function getSettings(): Promise<Settings> {
   const { data, error } = await supabase.from("settings").select("*").single();
 
   if (error) {
@@ -132,12 +143,12 @@ export async function getSettings() {
   return data;
 }
 
-export async function getCountries() {
+export async function getCountries(): Promise<Country[]> {
   try {
     const res = await fetch(
       "https://restcountries.com/v2/all?fields=name,flag"
     );
-    const countries = await res.json();
+    const countries: Country[] = await res.json();
     return countries;
   } catch {
     throw new Error("Could not fetch countries");

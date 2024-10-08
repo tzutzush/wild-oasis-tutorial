@@ -1,8 +1,8 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { updateReservation } from "../_lib/actions";
-import { Booking } from "../_types/booking";
+import { updateReservation } from "@/app/_lib/actions";
+import { Booking } from "@/app/_types/types";
 
 export function EditReservationForm({
   booking,

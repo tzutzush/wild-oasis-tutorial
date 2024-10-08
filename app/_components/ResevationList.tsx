@@ -1,9 +1,9 @@
 "use client";
 
-import { BookingWithRelatedCabin } from "@/app/_types/booking";
 import ReservationCard from "@/app/_components/ReservationCard";
 import { useOptimistic } from "react";
 import { deleteReservation } from "@/app/_lib/actions";
+import { BookingWithRelatedCabin } from "@/app/_types/types";
 
 export default function ReservationList({
   bookings,

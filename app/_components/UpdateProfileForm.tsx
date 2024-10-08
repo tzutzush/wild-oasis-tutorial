@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { updateProfile } from "../_lib/actions";
 import { Guest } from "../_types/types";
 import { UpdateButton } from "./UpdateButton";
@@ -20,7 +21,7 @@ export default function UpdateProfileForm({
         <label>Full name</label>
         <input
           name="fullName"
-          defaultValue={guest.fullName}
+          defaultValue={guest.fullName!}
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
@@ -30,7 +31,7 @@ export default function UpdateProfileForm({
         <label>Email address</label>
         <input
           name="email"
-          defaultValue={guest.email}
+          defaultValue={guest.email!}
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
@@ -39,8 +40,8 @@ export default function UpdateProfileForm({
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label htmlFor="nationality">Where are you from?</label>
-          <img
-            src={guest.countryFlag}
+          <Image
+            src={guest.countryFlag ?? ""}
             alt="Country flag"
             className="h-5 rounded-sm"
           />
@@ -51,7 +52,7 @@ export default function UpdateProfileForm({
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
         <input
-          defaultValue={guest.nationalID}
+          defaultValue={guest.nationalID ?? ""}
           name="nationalID"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
         />

@@ -5,8 +5,9 @@ import { auth } from "@/auth";
 
 export default async function Page() {
   const session = await auth();
+  if (!session) throw new Error("You are not logged in.");
   const bookings: BookingWithRelatedCabin[] = await getBookings(
-    session?.user.guestId!
+    session.user.guestId!
   );
 
   return (

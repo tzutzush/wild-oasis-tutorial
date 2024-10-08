@@ -1,7 +1,6 @@
 "use client";
 
 import { TrashIcon } from "@heroicons/react/24/solid";
-import { deleteReservation } from "../_lib/actions";
 import { useTransition } from "react";
 import SpinnerMini from "./SpinnerMini";
 
@@ -15,7 +14,7 @@ function DeleteReservation({
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
-    startTransition(() => deleteReservation(bookingId));
+    startTransition(() => onDelete(bookingId));
   };
 
   return (

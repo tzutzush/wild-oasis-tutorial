@@ -1,12 +1,11 @@
 "use client";
 
-import { useReservation } from "../_context/ReservationContext";
+// import { useReservation } from "../_context/ReservationContext";
 import { Cabin } from "../_types/types";
 
 function ReservationForm({ cabin }: { cabin: Cabin }) {
   // CHANGE
-  const { maxCapacity } = cabin;
-  const { range } = useReservation();
+  // const { range } = useReservation();
 
   return (
     <div className="scale-[1.01]">
@@ -37,11 +36,13 @@ function ReservationForm({ cabin }: { cabin: Cabin }) {
             <option value="" key="">
               Select number of guests...
             </option>
-            {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
-              <option value={x} key={x}>
-                {x} {x === 1 ? "guest" : "guests"}
-              </option>
-            ))}
+            {Array.from({ length: cabin.maxCapacity! }, (_, i) => i + 1).map(
+              (x) => (
+                <option value={x} key={x}>
+                  {x} {x === 1 ? "guest" : "guests"}
+                </option>
+              )
+            )}
           </select>
         </div>
 

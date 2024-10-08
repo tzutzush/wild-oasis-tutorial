@@ -1,7 +1,6 @@
 import { EditReservationForm } from "@/app/_components/EditReservationForm";
 import { getBooking, getCabin } from "@/app/_lib/data-service";
-import { Booking } from "@/app/_types/booking";
-import { Cabin } from "@/app/_types/cabins";
+import { Booking, Cabin } from "@/app/_types/types";
 
 export default async function Page({
   params,
