@@ -4,16 +4,22 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useReservation } from "../_context/ReservationContext";
 import { Cabin, Settings } from "@/app/_types/types";
+import {
+  differenceInDays,
+  isPast,
+  isSameDay,
+  isWithinInterval,
+} from "date-fns";
 
-// function isAlreadyBooked(range: any, datesArr: any) {
-//   return (
-//     range.from &&
-//     range.to &&
-//     datesArr.some((date: any) =>
-//       isWithinInterval(date, { start: range.from, end: range.to })
-//     )
-//   );
-// }
+function isAlreadyBooked(range: any, datesArr: any) {
+  return (
+    range.from &&
+    range.to &&
+    datesArr.some((date: any) =>
+      isWithinInterval(date, { start: range.from, end: range.to })
+    )
+  );
+}
 
 function DateSelector({
   settings,
@@ -25,20 +31,21 @@ function DateSelector({
   cabin: Cabin;
 }) {
   const { range, setRange, resetRange } = useReservation();
-  const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
-
-  console.log(bookedDates, cabin);
-
-  // SETTINGS
+  const displayRange = isAlreadyBooked(range, bookedDates)
+    ? { to: undefined, from: undefined }
+    : range;
   const { minBookingLength, maxBookingLength } = settings;
+  const numNights =
+    !displayRange.to || !displayRange.from
+      ? 0
+      : differenceInDays(displayRange.to, displayRange.from);
+
+  const cabinPrice = numNights * (cabin.regularPrice! - cabin.discount!);
 
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
-        selected={range}
+        selected={displayRange}
         onSelect={(range) => setRange(range!)}
         className="pt-12 place-self-center"
         mode="range"
@@ -49,20 +56,26 @@ function DateSelector({
         toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
         numberOfMonths={2}
+        disabled={(currentDate) =>
+          isPast(currentDate) ||
+          bookedDates.some((date) => isSameDay(date, currentDate))
+        }
       />
 
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
         <div className="flex items-baseline gap-6">
           <p className="flex gap-2 items-baseline">
-            {discount > 0 ? (
+            {cabin.discount! > 0 ? (
               <>
-                <span className="text-2xl">${regularPrice - discount}</span>
+                <span className="text-2xl">
+                  ${cabin.regularPrice! - cabin.discount!}
+                </span>
                 <span className="line-through font-semibold text-primary-700">
-                  ${regularPrice}
+                  ${cabin.regularPrice}
                 </span>
               </>
             ) : (
-              <span className="text-2xl">${regularPrice}</span>
+              <span className="text-2xl">${cabin.regularPrice}</span>
             )}
             <span className="">/night</span>
           </p>
