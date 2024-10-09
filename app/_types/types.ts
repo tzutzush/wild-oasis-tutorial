@@ -45,6 +45,30 @@ export type Booking = {
   cabinId: number | null;
 };
 
+export type newReservation = {
+  cabinId: number;
+  cabinPrice: number;
+  endDate: string | Date;
+  extrasPrice: number;
+  guestId: number;
+  hasBreakfast: boolean;
+  isPaid: boolean;
+  numGuests: number;
+  numNights: number;
+  observations: string;
+  startDate: string | Date;
+  status: string;
+  totalPrice: number;
+};
+
+export type ReservationDataOutsideForm = {
+  startDate: Date | string;
+  endDate: Date | string;
+  numNights: number;
+  cabinPrice: number;
+  cabinId: number;
+};
+
 export type Country = {
   name: string;
   flag: string;
